@@ -30,7 +30,6 @@ export default function Post({ post }: PostProps) {
             dangerouslySetInnerHTML={{ __html: post.content }}
             className={styles.postContent}
           />
-
         </article>
       </main>
     </>
@@ -42,13 +41,19 @@ export const getServerSideProps: GetServerSideProps = async ({
   params,
 }) => {
   const session = await getSession({ req });
+  // console.log("🚀 ~ session", session)
   const { slug } = params;
 
-  // nao esta logado
-  // if(!session) {}
+  if (!session.activeSubscription) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   const prismic = getPrismicClient(req);
-
   const postData = await prismic.getByUID("publication", String(slug), {});
 
   const post = {
