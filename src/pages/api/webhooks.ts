@@ -1,40 +1,39 @@
-import { Stripe } from "stripe";
-import { NextApiRequest, NextApiResponse } from "next";
-import { Readable } from "stream";
-
-import { stripe } from "../../services/stripe";
-import { saveSubscription } from "./_lib/manageSubscription";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { Readable } from 'stream'
+import { Stripe } from 'stripe'
+import { stripe } from '../../services/stripe'
+import { saveSubscription } from './_lib/manageSubscription'
 
 async function buffer(readable: Readable) {
-  const chunks = [];
+  const chunks = []
 
   for await (const chunk of readable) {
-    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
   }
 
-  return Buffer.concat(chunks);
+  return Buffer.concat(chunks)
 }
 
 // Toda API route pode exportar um objeto config, para mudar a config padrao
 // Desabilita bodyParser para consumir como Stream
 export const config = {
   api: {
-    bodyParser: false,
-  },
-};
+    bodyParser: false
+  }
+}
 
 const relevantEvents = new Set([
-  "checkout.session.completed",
-  "customer.subscription.updated",
-  "customer.subscription.deleted",
-]);
+  'checkout.session.completed',
+  'customer.subscription.updated',
+  'customer.subscription.deleted'
+])
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
-    const buf = await buffer(req);
-    const secret = req.headers["stripe-signature"];
+  if (req.method === 'POST') {
+    const buf = await buffer(req)
+    const secret = req.headers['stripe-signature']
 
-    let event: Stripe.Event;
+    let event: Stripe.Event
 
     // Cria o evento
     try {
@@ -42,50 +41,49 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         buf,
         secret,
         process.env.STRIPE_WEBHOOK_SECRET
-      );
+      )
     } catch (err) {
-      return res.status(400).send(`Webhook error ${err.message}`);
+      return res.status(400).send(`Webhook error ${err.message}`)
     }
 
-    const { type } = event;
+    const { type } = event
 
     if (relevantEvents.has(type)) {
       try {
         switch (type) {
-          case "customer.subscription.updated":
-          case "customer.subscription.deleted":
-            const subscription = event.data.object as Stripe.Subscription;
+          case 'customer.subscription.updated':
+          case 'customer.subscription.deleted':
+            const subscription = event.data.object as Stripe.Subscription
             await saveSubscription(
               subscription.id,
               subscription.customer.toString(),
               false
-            );
+            )
 
-            break;
-          case "checkout.session.completed":
-            const checkoutSession = event.data
-              .object as Stripe.Checkout.Session;
+            break
+          case 'checkout.session.completed':
+            const checkoutSession = event.data.object as Stripe.Checkout.Session
 
             await saveSubscription(
               checkoutSession.subscription.toString(),
               checkoutSession.customer.toString(),
               true
-            );
+            )
 
-            break;
+            break
           default:
-            throw new Error("Unhandled event.");
+            throw new Error('Unhandled event.')
         }
       } catch (error) {
         // Erro de desenvolvimento
         // Nao retorna status de erro pois vai para o Stripe, q ira ficar retentando em loop
-        return res.json({ error: "Webhook handler failed." });
+        return res.json({ error: 'Webhook handler failed.' })
       }
     }
 
-    res.json({ received: true });
+    res.json({ received: true })
   } else {
-    res.setHeader("Allow", "POST");
-    res.status(405).end("Method not allowed");
+    res.setHeader('Allow', 'POST')
+    res.status(405).end('Method not allowed')
   }
-};
+}

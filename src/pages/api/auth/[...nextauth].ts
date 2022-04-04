@@ -1,17 +1,15 @@
-import { query as q } from "faunadb";
-
-import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
-
-import { fauna } from "../../../services/fauna";
+import { query as q } from 'faunadb'
+import NextAuth from 'next-auth'
+import Providers from 'next-auth/providers'
+import { fauna } from '../../../services/fauna'
 
 export default NextAuth({
   providers: [
     Providers.GitHub({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      scope: "read:user",
-    }),
+      scope: 'read:user'
+    })
   ],
 
   callbacks: {
@@ -21,36 +19,36 @@ export default NextAuth({
           q.Get(
             q.Intersection([
               q.Match(
-                q.Index("subscription_by_user_ref"),
+                q.Index('subscription_by_user_ref'),
                 q.Select(
-                  "ref",
+                  'ref',
                   q.Get(
                     q.Match(
-                      q.Index("user_by_email"),
+                      q.Index('user_by_email'),
                       q.Casefold(session.user.email)
                     )
                   )
                 )
               ),
-              q.Match(q.Index("subscription_by_status"), "active"),
+              q.Match(q.Index('subscription_by_status'), 'active')
             ])
           )
-        );
+        )
 
         return {
           ...session,
-          activeSubscription: userActiveSubscription,
-        };
+          activeSubscription: userActiveSubscription
+        }
       } catch {
         return {
           ...session,
-          activeSubscription: null,
-        };
+          activeSubscription: null
+        }
       }
     },
 
     async signIn(user, account, profile) {
-      const { email } = user;
+      const { email } = user
 
       try {
         await fauna.query(
@@ -58,23 +56,23 @@ export default NextAuth({
             // nao existe user com esse email
             q.Not(
               q.Exists(
-                q.Match(q.Index("user_by_email"), q.Casefold(user.email))
+                q.Match(q.Index('user_by_email'), q.Casefold(user.email))
               )
             ),
             // true - Cria
-            q.Create(q.Collection("users"), { data: { email } }),
+            q.Create(q.Collection('users'), { data: { email } }),
             // else - retorna
-            q.Get(q.Match(q.Index("user_by_email"), q.Casefold(user.email)))
+            q.Get(q.Match(q.Index('user_by_email'), q.Casefold(user.email)))
           )
-        );
-        return true;
+        )
+        return true
       } catch {
-        console.log("CATCH!");
-        return false;
+        console.log('CATCH!')
+        return false
       }
-    },
+    }
   },
   jwt: {
-    signingKey: process.env.SIGNING_KEY,
-  },
-});
+    signingKey: process.env.SIGNING_KEY
+  }
+})
