@@ -20,17 +20,24 @@
     margin-top: 1.5rem;
   }
 
+  @media screen and (max-width: 768px) {
+    margin: 5rem 2rem 0;
+  }
+
   .postContent {
     margin-top: 2rem;
     line-height: 2rem;
     font-size: 1.125rem;
     color: var(--gray-100);
 
-    p, ul, ol {
+    p,
+    ul,
+    ol {
       margin: 1.5rem 0;
     }
 
-    ul, ol {
+    ul,
+    ol {
       padding-left: 1.5rem;
 
       li {
@@ -49,8 +56,10 @@
 .continueReadings {
   padding: 2rem;
   text-align: center;
+
   background: var(--gray-850);
   border-radius: 100px;
+
   font-size: 1.25rem;
   font-weight: bold;
   margin: 4rem 0 2rem;
@@ -66,4 +75,7 @@
     }
   }
 
+  @media screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
 }
