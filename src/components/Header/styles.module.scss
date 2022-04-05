@@ -1,6 +1,9 @@
 .headerContainer {
   border-bottom: 1px solid var(--gray-800);
-  margin-bottom: 4rem;
+
+  @media screen and (max-width: 576px) {
+    margin-bottom: 4rem;
+  }
 }
 
 .headerContent {

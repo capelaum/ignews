@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 0 2rem;
 
+  min-height: calc(100vh - 10rem);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
