@@ -35,6 +35,14 @@ export default function Post({ post }: PostProps) {
   )
 }
 
+type PostData = {
+  data: {
+    title: string
+    content: string
+  }
+  last_publication_date: string
+}
+
 export const getServerSideProps: GetServerSideProps = async ({
   req,
   params
@@ -52,14 +60,18 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const prismic = getPrismicClient(req)
-  const postData = await prismic.getByUID('publication', String(slug), {})
+  const postData: PostData = await prismic.getByUID(
+    'publication',
+    String(slug),
+    {}
+  )
 
   const post = {
     slug,
     title: RichText.asText(postData.data.title),
     content: RichText.asHtml(postData.data.content),
     updatedAt: new Date(postData.last_publication_date).toLocaleDateString(
-      'pt-BR',
+      'en-US',
       {
         day: '2-digit',
         month: 'long',
