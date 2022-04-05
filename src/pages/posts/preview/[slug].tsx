@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useSession } from 'next-auth/client'
-import { useRouter } from 'next/dist/client/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { RichText } from 'prismic-dom'
 import { useEffect } from 'react'
 import { getPrismicClient } from '../../../services/prismic'
@@ -53,6 +53,19 @@ export default function PostPreview({ post }: PostPreviewProps) {
   )
 }
 
+type PostData = {
+  data: {
+    title: string
+    content: [
+      {
+        type: string
+        text: string
+      }
+    ]
+  }
+  last_publication_date: string
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
@@ -63,14 +76,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params
   const prismic = getPrismicClient()
-  const postData = await prismic.getByUID('publication', String(slug), {})
+  const postData: PostData = await prismic.getByUID(
+    'publication',
+    String(slug),
+    {}
+  )
 
   const post = {
     slug,
     title: RichText.asText(postData.data.title),
     content: RichText.asHtml(postData.data.content.splice(0, 3)),
     updatedAt: new Date(postData.last_publication_date).toLocaleDateString(
-      'pt-BR',
+      'en-US',
       {
         day: '2-digit',
         month: 'long',
