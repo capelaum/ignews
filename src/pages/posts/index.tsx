@@ -6,7 +6,7 @@ import { RichText } from 'prismic-dom'
 import { getPrismicClient } from '../../services/prismic'
 import styles from './styles.module.scss'
 
-type Post = {
+export type Post = {
   slug: string
   title: string
   abstract: string
@@ -51,10 +51,10 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   )
 
-  // console.log(JSON.stringify(response, null, 2));
-  // console.log(response);
+  // console.log(JSON.stringify(response, null, 2))
+  // console.log(response)
 
-  const posts = response.results.map(post => {
+  const posts = response.results.map((post: any) => {
     return {
       slug: post.uid,
       title: RichText.asText(post.data.title),
@@ -62,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
         post.data.content.find(content => content.type === 'paragraph')?.text ??
         '',
       updatedAt: new Date(post.last_publication_date).toLocaleDateString(
-        'pt-BR',
+        'en-US',
         {
           day: '2-digit',
           month: 'long',
