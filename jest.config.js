@@ -16,7 +16,9 @@ const customJestConfig = {
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts(x)?',
-    '!<rootDir>/src/**/stories.tsx'
+    '!<rootDir>/src/**/stories.tsx',
+    '!<rootDir>/src/**/_app.tsx',
+    '!<rootDir>/src/**/_document.tsx'
   ]
 }
 

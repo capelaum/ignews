@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ignews
 
-## Getting Started
+Demo: https://capelaum-ignews.vercel.app
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Posts or News subscription service application, made only as simulation and educational purposes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Features include social login with Github, Prismic CMS to manage posts, Stripe as payment method and Fauna DB to store users and subscriptions data.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+It enables a not subscribed user to view only the initial content of the posts, while subscribed users can view the hole post.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Developed during the Ignite program - React trail
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<img src=".github/Capa.png" alt="Upfi cover" />
 
-## Learn More
+## Layout
 
-To learn more about Next.js, take a look at the following resources:
+You can check out the [layout][figma] in figma.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Executing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Create your `.env.local` file following the `.env.example` example.
 
-## Deploy on Vercel
+Clone this repository, install dependencies with `yarn` or `npm install` and run locally with `yarn dev` command in the terminal.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js][next]
+- [Sass][sass]
+- [Next Auth][next_auth]
+- [Stripe][stripe]
+- [Prismic CMS][prismic]
+- [Fauna DB][fauna_db]
+
+[next]: https://nextjs.org
+[sass]: https://sass-lang.coms
+[next_auth]: https://next-auth.js.org
+[stripe]: https://stripe.com
+[prismic]: https://prismic.io
+[fauna_db]: https://fauna.com
+[figma]: https://www.figma.com/file/iuxD2iS1mIelTiV8sdLbG4/ig.news-(Copy)?node-id=1%3A2
+
+## Credits
+
+🚀 [Rocketseat](https://www.rocketseat.com.br)
+
+ignews-zeta-eight.vercel.app
