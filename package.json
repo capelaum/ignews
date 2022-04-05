@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watchAll"
+    "test": "jest --maxWorkers=50%",
+    "test:watch": "yarn jest --watch --maxWorkers=50%",
+    "test:ci": "jest --runInBand"
   },
   "dependencies": {
     "@prismicio/client": "^5.0.0",
