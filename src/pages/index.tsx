@@ -1,6 +1,8 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import { SubscribeButton } from '../components/SubscribeButton'
+import useWindowSize from '../hooks/useWindowSize'
 import { stripe } from '../services/stripe'
 import styles from './home.module.scss'
 
@@ -12,6 +14,10 @@ interface HomeProps {
 }
 
 export default function Home({ product }: HomeProps) {
+  const { width } = useWindowSize()
+
+  const showHeroImage = width >= 576 ? true : false
+
   return (
     <>
       <Head>
@@ -31,7 +37,15 @@ export default function Home({ product }: HomeProps) {
           <SubscribeButton />
         </section>
 
-        <img src='/images/avatar.svg' alt='Girl coding' />
+        <Image
+          src='/images/avatar.svg'
+          alt='Girl coding'
+          width={500}
+          height={500}
+          layout='intrinsic'
+          objectPosition='right center'
+          objectFit='contain'
+        />
       </main>
     </>
   )
