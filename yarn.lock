@@ -3506,10 +3506,10 @@ next-auth@*:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-next-auth@^3.23.3:
-  version "3.29.1"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-3.29.1.tgz#24870b7aa70046a98cb4000d382e3685e9b753e4"
-  integrity sha512-Ipiywz2k+TWluqc9sle0zwh/GYxDjpGv/2ZuAxZBTfwL62pbyHX3JxMAE/frHYWDE0ZQ9bJLD67vP+Won2+SkA==
+next-auth@^3.29.10:
+  version "3.29.10"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-3.29.10.tgz#2667af749afee0f62c23f10e162a895306afd22b"
+  integrity sha512-e4nNYhISQRHNnem/WX1ybnQGDGb2rMP29maNmIXEOxSL6Uhu/pGFYu/aqApgIObDVWFt5l+33Ddh3rc71hjvEA==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@next-auth/prisma-legacy-adapter" "0.1.2"
