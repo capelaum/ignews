@@ -12,15 +12,15 @@
   },
   "dependencies": {
     "@prismicio/client": "^5.0.0",
-    "@stripe/stripe-js": "^1.31.0",
+    "@stripe/stripe-js": "^1.50.0",
     "axios": "^0.27.2",
-    "faunadb": "^4.3.0",
+    "faunadb": "^4.6.0",
     "next": "^12.3.4",
     "next-auth": "^4.0.0",
     "prismic-dom": "^2.2.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-icons": "^4.4.0",
+    "react-icons": "^4.8.0",
     "sass": "^1.52.3",
     "stripe": "^8.222.0"
   },
