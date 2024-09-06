@@ -13,10 +13,10 @@
   "dependencies": {
     "@prismicio/client": "^5.0.0",
     "@stripe/stripe-js": "^1.50.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
     "faunadb": "^4.6.0",
     "next": "^12.3.4",
-    "next-auth": "^4.0.0",
+    "next-auth": "^4.24.7",
     "prismic-dom": "^2.2.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
